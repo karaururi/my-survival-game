@@ -4,10 +4,60 @@
     <meta charset="utf-8">
     <title>1本指サバイバルゲーム</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #container { width: 100%; height: 100vh; }
+    </style>
 </head>
 <body>
     <div id="container"></div>
-    <script src="https://threejs.org/build/three.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        if ( ! Detector.webgl ) Detector.addMessage( 'WebGL isn\'t available' );
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+
+        // プレイヤーの作成 (シンプルな立方体)
+        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add( cube );
+        cube.position.set( 0, 0, 0 );
+
+        // プレイヤーの移動処理
+        let isSwiping = false;
+        let startX = 0;
+
+        document.addEventListener('touchstart', (event) => {
+            isSwiping = true;
+            startX = event.touches[0].clientX;
+        });
+
+        document.addEventListener('touchmove', (event) => {
+            if (!isSwiping) return;
+            const touch = event.touches[0];
+            const currentX = touch.clientX;
+            const deltaX = currentX - startX;
+            startX = currentX;
+
+            cube.position.x += deltaX * 0.01;
+            cube.position.x = Math.max(-5, Math.min(5, cube.position.x)); // 画面端で移動制限
+        });
+
+        document.addEventListener('touchend', () => {
+            isSwiping = false;
+        });
+
+        function animate() {
+            requestAnimationFrame( animate );
+            renderer.render( scene, camera );
+        }
+
+        animate();
+    </script>
 </body>
 </html>
