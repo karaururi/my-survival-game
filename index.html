@@ -11,10 +11,12 @@
 </head>
 <body>
     <div id="container"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script>
-        console.log(01);
-        if ( ! Detector.webgl ) Detector.addMessage( 'WebGL isn\'t available' );
+        console.log(02);
+        if ( ! THREE.WebGLRenderer.isWebGLEnabled ) {
+            alert( 'WebGL is not enabled in your browser.' );
+        }
 
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
