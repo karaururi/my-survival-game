@@ -1,0 +1,16 @@
+{
+  "name": "my-survival-game",
+  "version": "1.0.0",
+  "description": "1本指サバイバルゲーム",
+  "main": "script.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
